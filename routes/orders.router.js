@@ -3,9 +3,9 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/orders', (req, res) => {
-  res.json({
-    ORDER : "order 1"
-  })
+router.get('/', (req, res) => {
+  res.send('Lista de Pedidos')
 })
+
+module.exports = router;
 

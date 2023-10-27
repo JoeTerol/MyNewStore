@@ -19,7 +19,7 @@ class OrdersService {
     }
   }
 
- create(data){
+  async create(data){
   const  newProduct = {
     id: faker.string.uuid(),
     ...data
@@ -29,14 +29,14 @@ class OrdersService {
   return newProduct
  }
 
- find() {
+ async find() {
   return this.orders;
 
  }
- findOne(id) {
+ async findOne(id) {
   return this.orders.find(item => item.id === id );
  }
- update(id, changes) {
+ async update(id, changes) {
   const index = this.orders.findIndex(item => item.id === id);
   if (index === -1) {
     throw new Error('product nto found');
@@ -50,7 +50,7 @@ class OrdersService {
   return this.orders[index];
 
  }
- delete(id) {
+ async delete(id) {
   const index = this.orders.findIndex(item => item.id === id);
   if (index === -1) {
     throw new Error('product nto found');

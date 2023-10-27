@@ -5,30 +5,30 @@ const service = new OrdersService() //instancia
 
 
 
-router.get('/', (req, res) => {
-const orders = service.find();
+router.get('/', async (req, res) => {
+const orders = await service.find();
   res.status(201).json(orders);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const order = service.findOne(id);
+  const order = await service.findOne(id);
   res.json(order);
 });
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const body = req.body
-  const newOrder = service.create(body)
+  const newOrder =await service.create(body)
   res.status(201).json(newOrder);
 });
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const  { id } =  req.params;
   const body = req.body;
-  const order = service.update(id, body)
+  const order =await service.update(id, body)
   res.json(order);
 });
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const  { id } =  req.params;
-  const rta = service.delete(id);
+  const rta =await service.delete(id);
   res.json(rta);
 });
 module.exports = router;

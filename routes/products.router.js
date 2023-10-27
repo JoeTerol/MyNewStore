@@ -1,57 +1,34 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker')
-
 const router = express.Router();
-
+const ProductsService = require('../services/products.service')
+const service = new ProductsService() //instancia
 
 
 
 router.get('/', (req, res) => {
-  const porducts = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    porducts.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      Image: faker.image.avatar()
-    });
-
-
-  }
-  res.json (porducts);
+const products = service.find();
+  res.status(201).json(products);
 });
+
 router.get('/:id', (req, res) => {
-  const { id } = req.params; //de todos los params quiero solo el ID
-  res.json({
-
-    id,
-    name: "product2",
-    price: 2000
-
-    });
+  const { id } = req.params;
+  const product = service.findOne(id);
+  res.json(product);
 });
 router.post('/', (req, res) => {
   const body = req.body
-  res.json({
-    message: 'Created',
-    data: body
-  });
+  const newProduct = service.create(body)
+  res.status(201).json(newProduct);
 });
 router.patch('/:id', (req, res) => {
   const  { id } =  req.params;
   const body = req.body;
-  res.json({
-    message: 'updated',
-    data: body,
-    id
-  });
+  const product = service.update(id, body)
+  res.json(product);
 });
 router.delete('/:id', (req, res) => {
   const  { id } =  req.params;
-  res.json({
-    message: 'deleted',
-    id
-  });
+  const rta = service.delete(id);
+  res.json(rta);
 });
 module.exports = router;

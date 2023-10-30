@@ -24,11 +24,11 @@ router.get('/:id',async (req, res, next) => {
   }
 });
 router.post('/',async (req, res, next) => {
-try {
+  try {
   const body = req.body
   const newProduct = await service.create(body)
   res.status(201).json(newProduct);
-}catch(error){
+  }catch(error){
   next(error)
   }
 });
@@ -44,7 +44,6 @@ router.patch('/:id', async (req, res, next) => {
 
 });
 router.delete('/:id', async (req, res, next) => {
-
   try {
     const  { id } =  req.params;
     const rta = await service.delete(id);

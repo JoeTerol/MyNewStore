@@ -1,4 +1,5 @@
-/* eslint-disable no-unused-vars */
+
+
 function logErrors (err, req, res, next) {
   console.error(err);
   next(err);
@@ -10,6 +11,14 @@ function errorHandler(err, req, res, next) {
     message: err.message,
     stack: err.stack,
   });
+  next()
 }
+function boomErrorHandler(err, req, res, next) {
+if (err.isBoom) {
+  const { output } = err;
+  res.status(output.statuscode).json(output.payload);
+}
+  next(err)
 
-module.exports = { logErrors, errorHandler };
+};
+module.exports = { logErrors, errorHandler, boomErrorHandler };

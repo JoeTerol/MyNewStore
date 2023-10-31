@@ -40,7 +40,7 @@ async create(data){
   if (!product) {
     throw boom.notFound('product not found')
   }if(product.isBlock) {
-    throw boom.conflict(' product is block')
+    throw boom.conflict('product is block')
   }
   return product;
  };

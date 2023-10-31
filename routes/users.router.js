@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const UsersService = require('../services/users.service')
+const validatorHandler = require('../middlewares/validator.handler')
+const UsersService = require('../services/users.service');
+const { getUserSchema, createUserSchema, updateUserSchema } = require('../schemas/user.schema');
 const service = new UsersService() //instancia
 
 router.get('/', async (req, res, next) => {
@@ -13,7 +15,9 @@ router.get('/', async (req, res, next) => {
   }
   });
 
-  router.get('/:id', async (req, res, next) => {
+  router.get('/:id',
+    validatorHandler( getUserSchema, 'params'),
+    async (req, res, next) => {
     try {
       const { id } = req.params;
     const user = await service.findOne(id);
@@ -22,7 +26,9 @@ router.get('/', async (req, res, next) => {
       next(error)
     }
   });
-  router.post('/', async (req, res, next) => {
+  router.post('/',
+    validatorHandler(createUserSchema, 'body'),
+    async (req, res, next) => {
     try {
       const body = req.body
       const newProduct = await service.create(body)
@@ -31,7 +37,10 @@ router.get('/', async (req, res, next) => {
       next(error)
     }
   });
-  router.patch('/:id', async (req, res, next) => {
+  router.patch('/:id',
+    validatorHandler(getUserSchema, 'params'),
+    validatorHandler(updateUserSchema, 'body'),
+    async (req, res, next) => {
     try {
       const  { id } =  req.params;
     const body = req.body;

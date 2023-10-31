@@ -16,9 +16,10 @@ function errorHandler(err, req, res, next) {
 function boomErrorHandler(err, req, res, next) {
 if (err.isBoom) {
   const { output } = err;
-  res.status(output.statuscode).json(output.payload);
+  res.status(output.statusCode).json(output.payload);
+
 }
   next(err)
 
 };
-module.exports = { logErrors, errorHandler, boomErrorHandler };
+module.exports = { logErrors, boomErrorHandler, errorHandler };

@@ -18,7 +18,7 @@ const whitelist = ['http://localhost:8080'];
       }
     }
   };
-app.use(cors(options));
+app.use(cors(options))
 
 
 routerApi(app);
@@ -30,5 +30,5 @@ app.use(errorHandler);
 
 
 app.listen(port, () => {
-  console.log('Mi port' + port)
+  // console.log('Mi port' + port)
 })

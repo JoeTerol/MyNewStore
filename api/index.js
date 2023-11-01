@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-const whitelist = ['http://localhost:8080', 'https://myapp.com'];
+const whitelist = ['http://localhost:3000', 'https://myapp.com'];
   const options = {
     origin: (origin, callback) => {
       if (whitelist.includes(origin)) {

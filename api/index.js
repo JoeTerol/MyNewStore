@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-const whitelist = ['http://localhost:3000', 'https://myapp.com'];
+const whitelist = ['http://localhost:3000', 'https://myapp.com', 'https://my-new-store-jnbwo4xjh-joe-terols-projects.vercel.app/'];
   const options = {
     origin: (origin, callback) => {
       if (whitelist.includes(origin)) {

@@ -7,17 +7,24 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-const whitelist = ['http://localhost:3000', 'https://myapp.com', 'https://my-new-store-jnbwo4xjh-joe-terols-projects.vercel.app/'];
-  const options = {
-    origin: (origin, callback) => {
-      if (whitelist.includes(origin)) {
-        callback(null, true)
+// const whitelist = ['http://localhost:3000', 'https://myapp.com', 'https://my-new-store-jnbwo4xjh-joe-terols-projects.vercel.app/', 'https://www.getpostman.com'];
+//   const options = {
+//     origin: (origin, callback) => {
+//       if (whitelist.includes(origin)) {
+//         callback(null, true)
 
-      }else {
-        callback(new Error('No Permitido'))
-      }
-    }
-  };
+//       }else {
+//         callback(new Error('No Permitido'))
+//       }
+//     }
+//   };
+
+const options = {
+  origin: '*',
+};
+
+
+
 app.use(cors(options))
 
 

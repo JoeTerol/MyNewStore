@@ -1,7 +1,10 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
-const email= Joi.number().integer();
+const id = Joi.string();
+const email = Joi.string().email({
+  minDomainSegments: 2,
+  tlds: { allow: ['com', 'net'] }
+});
 const password = Joi.string().min(8);
 // const role = Joi.string().min(5)
 

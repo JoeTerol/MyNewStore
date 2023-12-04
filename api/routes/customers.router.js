@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CustomersService = require('../services/customers.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { getCustomerSchema, createCustomerSchema, updateCustomerSchema } = require('../schemas/order.schema');
+const { getCustomerSchema, createCustomerSchema, updateCustomerSchema } = require('../schemas/customer.schema');
 const service = new CustomersService() //instancia
 
 

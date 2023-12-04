@@ -8,7 +8,9 @@ class CustomersService {
   constructor() {}
 
  async find() {
-  const rta = await models.Customer.findAll();
+  const rta = await models.Customer.findAll({
+    include: ['user']
+  });
   return rta;
  }
  async findOne(id) {
@@ -19,7 +21,8 @@ class CustomersService {
   return customer;
  }
  async create(data){
-  return data
+  const newCustomer = await models.Customer.create(data);
+  return newCustomer;
  }
  async update(id, changes) {
   const model = await this.findOne(id);

@@ -1,35 +1,15 @@
-const { faker } = require('@faker-js/faker');
-const boom = require('@hapi/boom')
+const boom = require('@hapi/boom');
+const { models } = require('./../libs/sequelize')
 class CategoriesService {
-
   constructor() {
-    this.categories = [];
-    this.generate();
   }
-  generate() {
-    const limit = 10;
-    for(let index = 0; index < limit; index++){
-      this.categories.push({
-        id:faker.string.uuid(),
-        name: faker.company.name(),
-      });
-    }
-
+  async create(data){
+    const  newCategory = await models.Category.create(data);
+    return newCategory;
   }
-
-  create(data){
-    const  newCategory = {
-      id: faker.string.uuid(),
-      ...data
-
-    }
-    this.categories.push(newCategory);
-    return newCategory
-   }
-
    async  find() {
-    return this.categories;
-
+    const categories = await models.Category.findAll();
+    return categories;
    }
    async findOne(id) {
     return this.categories.find(item => item.id === id );

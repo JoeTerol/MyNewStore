@@ -9,21 +9,30 @@ const CategorySchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
 
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      field: 'create_at',
-      defaultValue: Sequelize.NOW
-
+},
+  name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
   },
-  // Otros campos específicos para la tabla de categorías
-  // Ejemplo: name, description, createdAt, etc.
-}
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  createAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  }
 }
 
 class Category extends Model {
-  static associate() {
-    // Asociaciones si es necesario
+  static associate(models) {
+  this.hasMany(models.Product, {
+    as: 'products',
+    foreignKey: 'categoryId'
+  })
   }
 
   static config(sequelize) {

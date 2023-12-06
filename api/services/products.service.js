@@ -14,7 +14,9 @@ async create(data){
 
  }
  async  find() {
-  const products = await models.Product.findAll();
+  const products = await models.Category.findAll({
+    include: ['category']
+    });
   return products;
  }
  async findOne(id) {

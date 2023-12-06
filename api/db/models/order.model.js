@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-
+const {CUSTOMER_TABLE} = require('./customer.model');
 const ORDER_TABLE = 'orders';
 
 const OrderSchema = {
@@ -9,21 +9,32 @@ const OrderSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
 
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      field: 'create_at',
-      defaultValue: Sequelize.NOW
 
+},
+customerId: {
+  field: 'customer_id',
+  allowNull: false,
+  type: DataTypes.INTEGER,
+  references: {
+    model: CUSTOMER_TABLE,
+    key: 'id'
+  },
+  onUpdate: 'CASCADE',
+  onDelete: 'SET NULL'
+},
+createdAt: {
+  allowNull: false,
+  type: DataTypes.DATE,
+  field: 'created_at',
+  defaultValue: Sequelize.NOW
   }
-  // Otros campos específicos para la tabla de pedidos
-  // Ejemplo: customerId, totalAmount, createdAt, etc.
-}
 }
 
 class Order extends Model {
-  static associate() {
-    // Asociaciones si es necesario
+  static associate(models) {
+    this.belongsTo(models.Customer, {
+      as: 'customer',
+    });
   }
 
   static config(sequelize) {

@@ -1,40 +1,30 @@
-const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
+
+const { models } = require('./../libs/sequelize');
 class OrdersService {
 
   constructor() {
-    this.orders = [];
-    this.generate();
+
   }
-  generate() {
-
-    const limit = 100 ;
-    for (let index = 0; index < limit; index++) {
-      this.orders.push({
-        id: faker.string.uuid(),
-
-      });
-
-
-    }
-  }
-
   async create(data){
-  const  newOrder = {
-    id: faker.string.uuid(),
-    ...data
-
-  }
-  this.orders.push(newOrder);
-  return newOrder
+  const newOrder = await models.Order.create(data);
+  return newOrder;
  }
 
  async find() {
-  return this.orders;
+  return;
 
  }
  async findOne(id) {
-  return this.orders.find(item => item.id === id );
+  const order = await models.Order.findByPk(id, {
+    include: [
+      {
+        association: 'customer',
+        include: ['user']
+      }
+    ]
+  });
+  return order;
  }
  async update(id, changes) {
   const index = this.orders.findIndex(item => item.id === id);

@@ -12,7 +12,10 @@ class CategoriesService {
     return categories;
    }
    async findOne(id) {
-    return this.categories.find(item => item.id === id );
+    const category = await models.Category.findByPk(id, {
+      include: ['products']
+    });
+    return category;
    }
    async update(id, changes) {
     const index = this.categories.findIndex(item => item.id === id);

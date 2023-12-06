@@ -1,18 +1,16 @@
 const Joi = require('joi');
+const customerId = Joi.number().integer();
+const id = Joi.number().integer();
 
-const id = Joi.string().uuid();
-const name = Joi.string().min(3).max(15);
 
 const createOrderSchema = Joi.object({
-  name: name.required()
+  customerId: customerId.required(),
 
 });
-const updateOrderSchema = Joi.object({
-    name: name
-});
+
 const getOrderSchema = Joi.object({
     id: id.required(),
 
 });
-module.exports = { createOrderSchema, updateOrderSchema, getOrderSchema };
+module.exports = { createOrderSchema, getOrderSchema };
 

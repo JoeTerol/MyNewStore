@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const OrdersService = require('../services/orders.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { getOrderSchema, createOrderSchema, updateOrderSchema } = require('../schemas/order.schema');
+const { getOrderSchema, createOrderSchema } = require('../schemas/order.schema');
 const service = new OrdersService() //instancia
 
 
@@ -10,8 +10,8 @@ const service = new OrdersService() //instancia
 router.get('/',
  async (req, res, next) => {
  try {
-  const orders = await service.find();
-  res.status(201).json(orders);
+  const order = await service.find();
+  res.status(201).json(order);
  } catch (error) {
   next(error)
   }
@@ -38,19 +38,7 @@ router.post('/',
     next(error)
   }
 });
-router.patch('/:id',
-  validatorHandler(getOrderSchema, 'params'),
-  validatorHandler(updateOrderSchema, 'body'),
-   async (req, res, next) => {
-  try {
-    const  { id } =  req.params;
-    const body = req.body;
-    const order =await service.update(id, body)
-    res.json(order);
-  }catch(error){
-    next(error)
-  }
-});
+
 router.delete('/:id', async (req, res, next) => {
   try {
     const  { id } =  req.params;
